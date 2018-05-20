@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>IOG</title>
+
+    <!-- Bootstrap core CSS -->
+    <link  href="{{ url_for('static', filename = 'vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename = 'css/one-page-wonder.css') }}" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg row">
+      
+        <div class="collapse navbar-collapse col-sm-1 col-lg-1 col-md-1" id="navbarResponsive">
+            &nbsp; 
+        </div>
+        <div class="col-sm-2 col-lg-2 col-md-2 col-sm-2 col-lg-2 col-md-2"><a class="navbar-brand" href="#" style="color:#069edb;">SMART SEARCH</a></div>
+        <div class="collapse navbar-collapse col-sm-7 col-lg-7 col-md-7" id="navbarResponsive">
+            &nbsp; 
+        </div>
+        <div class="collapse navbar-collapse col-sm-2 col-lg-2 col-md-2" id="navbarResponsive">
+            <img src="{{ url_for('static', filename = 'images/Opera_sol.png') }}"  class="pull-right">  
+        </div>
+      
+    </nav>
+
+    <header class="masthead">
+      <div class="overlay">
+        <div class="container">
+          
+           <h6 class="display-6 text-white">INSIGHTS . OPERATIONS . SOLUTIONS</h6>
+        
+            <div class="input-group">
+        <input type="text" id="text_item" class="form-control" placeholder="Search your query here...">
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-primary">GO !!!</button>
+        </div>
+       
+    </div>
+           
+         <div id="item" class="form-control btn btn-default"></div>
+        
+        </div>
+        
+      </div>
+      
+    </header>
+
+    <br>
+    <div class="text-center">
+		<input type="button" class="btn btn-primary" value="Upload Your Files Here" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+        <input type="button" class="btn btn-success" value="IOG Insights" id="insight">
+    </div>
+     <br>
+    
+      
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+        <form action="http://127.0.0.1:5000/upload_file" method=post enctype=multipart/form-data >
+            <div class="modal-body">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Script Name:</label>
+            <input type="text" class="form-control" id="file-name" name="file-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Script Description:</label>
+            <textarea class="form-control" id="tag-name" name="tag-name"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Script:</label>
+            <input type=file name = "file" />
+          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="submit">Upload</button>
+      </div>
+          </form>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">File Uploaded Successfully!!!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="failureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="failureModalLabel">File Was Not Uploaded successfully!!!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+        
+    </div>
+  </div>
+</div>
+      
+      
+     
+    <div class="breadcrumb">
+		<h4 class="text-center">About "SMART SEARCH"</h4>
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-sm-6 col-lg-6">	
+                <h6 class="text-center">WHAT ? </h6>
+					<p style="color:#069edb;">
+                    "SMART SEARCH" is a search engine specificaly build to provide users with instant results regarting a UTILITY/CODE previously used in a project at Opera Solutions.
+                     
+                        
+                </p>
+                
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6">
+                <h6 class="text-center">HOW ? </h6>
+                <p style="color:#069edb;">
+                
+                    Just enter the keyword and "SMART SEARCH" will direct you to the best results.    
+                        
+                        
+                </p>
+            </div>    
+        </div>
+      </div>
+	
+	
+	
+	<hr>
+	  
+      
+
+    <!-- Footer -->
+    <footer class="py-5">
+      <div class="container" style="color:#069edb;">
+        <p class="m-0 text-center">Copyright &copy; IOG - OPERA SOLUTIONS 2017</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename = 'vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'vendor/popper/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'vendor/jquery/bootbox.min.js') }}"></script>
+
+    <script>
+    
+    $( "#text_item" ).keyup(function() {
+            var val = $( "#text_item" ).val();
+            
+            
+            $.ajax({
+            type: "POST",
+            url: "/submit",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({ 'value' : val}),            
+            success: function(result) {
+                console.log(result);
+                
+                console.log(result[0]);
+                $("#item").empty();
+                $.each(result, function(key,value){
+                $("#item").append("<a id="+value.script+" class='link' href='#'><b>"+value.script+"</b></a><br><hr>");
+               });
+                    
+                
+                
+            },
+            error: function(error) {
+                
+                console.log(error);
+            }
+        });
+            
+    });
+    
+
+        $(document).on('click', '.link', function () {
+
+            var value = $(this).attr("id");
+            alert(value);
+            $.ajax({
+            type: 'GET',
+            url: "/file_display",
+            data: JSON.stringify( value ),
+            
+            success: function(result) {
+                var obj = JSON.parse(result)
+                window.location.href = "/"+obj[0]["link"];
+                localStorage.setItem("fileContent", obj[0]["data"]);
+                localStorage.setItem("fileName", obj[0]["name"]);
+                
+            },
+            error: function(error) {                
+                console.log(error);
+            }
+        });
+        });
+        
+        $( "#insight" ).click(function() {
+           
+           $.ajax({
+            type: 'GET',
+            url: "/view_insight",
+            
+            success: function(result) {
+                console.log(result);
+                window.location.href = "/"+result;
+                
+            },
+            error: function(error) {                
+                console.log(error);
+            }
+        });
+        });
+    
+    </script>
+  
+
+  
+  
+  
+  </body>
+
+</html>

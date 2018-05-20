@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>IOG</title>
+
+    <!-- Bootstrap core CSS -->
+    <link  href="{{ url_for('static', filename = 'vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename = 'css/one-page-wonder.css') }}" rel="stylesheet">
+    <link  href="{{ url_for('static', filename = 'css/pqgrid.min.css') }}" rel="stylesheet">
+    <link  href="{{ url_for('static', filename = 'css/pqgrid.css') }}" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg row">
+      
+        <div class="collapse navbar-collapse col-sm-1 col-lg-1 col-md-1" id="navbarResponsive">
+            &nbsp; 
+        </div>
+        <div class="col-sm-2 col-lg-2 col-md-2 col-sm-2 col-lg-2 col-md-2"><a class="navbar-brand" href="#" style="color:#069edb;">SMART SEARCH</a></div>
+        <div class="collapse navbar-collapse col-sm-7 col-lg-7 col-md-7" id="navbarResponsive">
+            &nbsp; 
+        </div>
+        <div class="collapse navbar-collapse col-sm-2 col-lg-2 col-md-2" id="navbarResponsive">
+            <img src="{{ url_for('static', filename = 'images/Opera_sol.png') }}"  class="pull-right">  
+        </div>
+        
+    </nav>
+
+   
+
+    <br>
+
+</div>
+      
+      
+     
+    <div class="breadcrumb">
+    <h4 class="text-center"><a class="navbar-brand" href="{{ url_for('index') }}" style="color:#069edb;">INSIGHTS</a></h4>
+		<h4 class="text-center" id="filename"></h4>
+	</div>
+     <div class="overlay row">
+        <div class="container col-sm-6 col-lg-6 col-md-6 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+          
+           <h6 class="display-6" id="data_cont"></h6>
+        
+            
+        </div>
+    </div>
+    
+    <div style="padding-left: 120px;">
+    
+        <div id="grid_json" ></div>
+        </div>
+    </div>
+
+	<hr>
+    <div>
+    
+        <div id="container" style="width:100%; height:400px;"></div>
+    </div>
+
+    
+    
+
+    <!-- Footer -->
+    <footer class="py-5">
+      <div class="container" style="color:#069edb;">
+        <p class="m-0 text-center">Copyright &copy; IOG - OPERA SOLUTIONS 2017</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/base/jquery-ui.css" />
+    <script src="{{ url_for('static', filename = 'vendor/jquery/jquery.min.js') }}"></script>    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>    
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script src="{{ url_for('static', filename = 'vendor/popper/popper.min.js') }}"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script  src="{{ url_for('static', filename = 'vendor/jquery/jquery.ui.touch-punch.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'vendor/jquery/bootbox.min.js') }}"></script>
+    <script  src="{{ url_for('static', filename = 'vendor/jquery/pqgrid.min.js') }}"></script>
+    <script  src="{{ url_for('static', filename = 'vendor/jquery/highcharts.js') }}"></script>
+
+  </body>
+
+<script>
+
+var dataValue = {{rows|tojson}}
+
+
+ $(function(){
+    var data = dataValue;
+             
+var colModel = [
+        { 
+            title: "Script", //title of column. 
+            width: 500, //initial width of column
+            dataType: "string", //data type of column
+            dataIndx: "script",
+            align: 'center',
+            filter: { type: 'textbox', attr: 'placeholder="Search..."', condition: "contain", listeners: ['keyup']}
+        },
+        { 
+            title: "Times Used", 
+            width:500, 
+            dataType: "string", 
+            dataIndx: "visitPageCount",
+            align: 'center',
+            filter: { type: 'textbox', attr: 'placeholder="Search..."', condition: "contain", listeners: ['keyup']}
+        }
+    ];
+
+
+    //main object to be passed to pqGrid constructor.    
+    var obj = {
+        width: 1100, //width of grid
+        height: 500, //height of grid
+        columnBorders: true,
+		flexHeight: true,
+        scrollModel:{pace: 'fast', autoFit: true, theme: true },
+        pageModel: {type: "local", rPP:30, rPPOptions: [10, 20, 30, 50, 100], strRpp:"{0}", strDisplay:"{0} to {1} of {2}"},
+		filterModel: { on: true, mode: "AND", header: true },
+        colModel: colModel,
+        dataModel: {data: data}
+    };    
+     
+    $("#grid_json").pqGrid( obj );   //since version 3.2.0
+    });
+
+
+    var count_python=0;
+    var count_shell=0;
+    var count_other=0;
+
+    
+        for(var i = 0; i < dataValue.length; i++) {
+            var obj = dataValue[i];
+            
+            if(obj.script.split(".")[1] == "py"){
+                count_python = count_python+1;
+                
+            }
+            else if(obj.script.split(".")[1] == "sh"){
+                count_shell = count_shell+1;
+            } 
+            else{
+                count_other = count_other+1;
+            }
+        }  
+        console.log(count_python)
+        console.log(count_shell)
+        console.log(count_other)
+ 
+    
+$(function () { 
+    var myChart = Highcharts.chart('container', {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Analysis'
+        },
+        xAxis: {
+            categories: ['Scripts']
+        },
+        yAxis: {
+            title: {
+                text: 'Total in Each'
+            }
+        },
+        series: [{
+            name: 'Python',
+            data: [count_python]
+        }, {
+            name: 'Shell',
+            data: [count_shell]
+        },{
+            name: 'Others',
+            data: [count_other]
+        }
+        ],
+    });
+});
+</script>
+  
+</html>

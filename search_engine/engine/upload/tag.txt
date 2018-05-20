@@ -1,0 +1,38 @@
+import csv
+import smtplib
+from os.path import basename
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.utils import COMMASPACE, formatdate
+
+def transpose(lists):
+    if not lists: 
+        return []
+    return map(lambda *row: list(row), *lists)
+
+def writeData(fileName,data):
+    file = open(fileName,'wb')
+    writer = csv.writer(file)
+    for row in data:
+        writer.writerow(row)
+    file.close()
+
+def sendMail(sendFrom, sendTo, subject, text, files=None, server='172.20.3.14'):
+    message            = MIMEMultipart()
+    message['From']    = sendFrom
+    message['To']      = COMMASPACE.join(sendTo)
+    message['Date']    = formatdate(localtime=True)
+    message['Subject'] = subject
+
+    message.attach(MIMEText(text))
+
+    for fileLoc in files or []:
+        with open(fileLoc, "rb") as file:
+            part = MIMEApplication(file.read(),Name=basename(fileLoc))
+            part['Content-Disposition'] = 'attachment; filename="%s"' % basename(fileLoc)
+            message.attach(part)
+
+    smtp = smtplib.SMTP(server)
+    smtp.sendmail(sendFrom, sendTo, message.as_string())
+    smtp.close()

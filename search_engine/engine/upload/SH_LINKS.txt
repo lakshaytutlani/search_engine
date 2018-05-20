@@ -1,0 +1,153 @@
+Please explore the documentation links of Signal Hub Manager, IDE & KC. 
+http://confluence.operasolutions.com/wiki/display/VP212/Getting+Started
+http://confluence.operasolutions.com/wiki/display/VP212/Getting+Started+with+IDE
+http://confluence.operasolutions.com/wiki/display/VP212/SHM+Quick+Start
+http://confluence.operasolutions.com/wiki/display/VP212/Getting+Started+with+KC
+http://confluence.operasolutions.com/wiki/display/VP/Getting+Started+with+the+Centralized+IDE
+http://confluence.operasolutions.com/wiki/display/VP212/User+Reference
+http://confluence.operasolutions.com/wiki/display/VP212/Training
+
+--------------------------------------------------------------------------------------------------------------------------
+
+ba_ah_incremental_cust_entity.cust_entity_generate
+
+
+shortcut:  http://confluence.operasolutions.com/wiki/display/VP212/Keyboard+Shortcuts
+
+1. Command to start signalhub project is:
+sighub start-server -s ui -e environment.yaml
+go to this link in most cases to start ide:  http://localhost:8088/ide/index.html#/local
+
+2. The IDE starts by default on port 8088.  However, this may have a conflict on some servers.  
+If you get a message reporting a conflict, use the "-p" switch to choose another port.  "-p 0" will give you next available port. Open a browser window to http://server_name:port_number/client/index.html
+sighub start-server -s ui -e environment.yaml -p 1234
+
+3. Command used on cmd to check if code has any error and generate gen folder:
+sighub generate -e environment.yaml
+
+4. Command used to run view, The sighub run command executes one or more signal set definitions, view definitions, or workflow definitions.
+sighub run -e environment.yaml run.runView
+
+5. To run sigs file, we use this command:
+sighub run -e environment.yaml X.test
+
+
+
+----------------------------------------------------------------------------------------------------------------------------
+The Project Files header will be present in any Signal Hub project, no matter the contents. 
+This is because a project file called an environment file is required to start up each and every Signal Hub project. 
+The other headers, Import and Signals, will vary by project because these are the names of libraries. Each library contains one or more definitions, such as collections, views, or signal sets.
+A library not only organizes definitions into their conceptual categories; it is also a separate YAML file containing the code for these definitions. 
+
+A signal set contains signals – transformations that can both describe and make predictions from data. 
+The signals are grouped into signal sets for the same modular capabilities as having multiple views.
+A schema describes fields and their respective data types. Navigate to import.helloSchema by clicking helloSchema under the Solution Explorer.
+The environment file is needed to start up any signal hub project in the IDE. Click environment on the left under the Solution Explorer. 
+One YAML panel will be displayed, as there is not a GUI for environment files.
+The environment file, like this project, is minimal. It defines two properties: fileSearchPaths and dataDir. 
+As other parameters are named throughout the Signal Hub solution, they will need to be defined in the corresponding environment file.
+
+The manifest file is an optional file mainly used with other Signal Hub apps such as the Knowledge Center (KC) and Signal Hub Manager (SHM) it is important to 
+include accurate and thorough metadata for your project. 
+Click manifest on the left  under the solution explorer.
+A design panel and a synchronized YAML panel will appear. The design panel is a list of fields used for the project's metadata.  
+
+The Signal Hub Knowledge Center is designed to be an interactive Signal management system.
+It enables model developers and business users to easily find, understand, and reuse Signals that already exist in the Signal Library inside Signal Hub.
+
+The Knowledge Center (KC) is a knowledge management system where all of the intelligence that has been extracted from the data is stored and organized.
+There are multiple tools that enable users to explore the library of signals and understand the signals in detail. 
+
+The IDE is the workbench of Signal Hub. 
+Together with the KC, it enables users to interact with all the functionality and capabilities offered in Signal Hub via a rich graphical user interface (UI).
+The IDE is intrinsically an environment to develop end-to-end analytic solutions.
+It allows all the components of the entire analytic modeling process to come together, from data to Signals. 
+
+____________________________________________________________________________________________________________________________________
+
+SHM
+
+Make sure your SHM and Signal Hub installations are of the same version. Confirm this by checking that the SIGHUB_HOME environment variable points to a version of Signal Hub that matches the version of SHM. 
+Make sure your project contains an environment_shm.yaml file.
+All input data must be uploaded to the server on which SHM is installed.
+All paths in this file, e.g. for a dataDir parameter, must be absolute and readable by the SHM from anywhere.
+A standard environment file, containing paths relative to the project directory, will not be sufficient for the SHM to run a solution. 
+Package your project using the package command and the original environment file: 
+sighub package -e environment.yaml
+Upload your solution using SHM UI.
+URL Format: http://<host-name>:<ui-port>/shm/index.html#/ Replace host-name with the cluster host name and ui-port with the port on which the ui server is started.
+Click 'Upload Solution' under the 'Solution Explorer' menu.
+Upload the .sar file created by the package command, as well as the environment_shm.yaml file created in #1.
+Select 'Force' if you'd like to upload your solution ignoring duplicate versions.
+Trigger the workflow externally using the trigger-shm command.
+Make sure that Environment workflows#shm is configured with correct shm-executor server configuration.
+sighub trigger-shm -e environment_shm.yaml workflow.workflow_name
+
+____________________________________________________________________________________________________________________________________
+
+COLLECTION
+
+SCHEMA: The fully-qualified name of the schema you want to impose on the collection.
+ This property is not mandatory, but it is recommended. If not specified, Signal Hub attempts to establish a schema for the collection.
+ 
+ Schema is imposed after finishing of all transformationIf no schema given, it will be enforced by default.
+ 
+ The collection defined above can in-turn be used by a View transformation such as the "readCollection" transformation.
+ 
+____________________________________________________________________________________________________________________________________
+
+CMD
+
+The sighub generate command generates executable DataFlow code for a set of Signal Hub views and/or signal sets. 
+It is also used to generate workflow descriptor files for Signal Hub workflows. 
+
+________________________________________________________________________________________________________________________________________
+
+LIBRARIES:
+
+Libraries are YAML files that logically group definitions together.  
+Each definition type, e.g. collections or schemas, have their own section.  Each section can have one or more definitions of a given type.
+If there are no definitions of a given type, the section is omitted. 
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~COMMANDS:
+
+1. map is used to rename columns
+2. using group to do group by 
+   To calculate instance use count() as xyz 
+3. pie and bar graph are used
+4. persistance is used to save intermediate output
+5. flow var is used in read view, if you want to use persist output of rejected records after filter
+6. 
+
+
+
+
+screen -S  ["to start a screen"
+run signal hub command
+cltr + a and press d  "detach"
+screen -r <mention no> [re-attach] 
+
+
+LOGIC BEHIND ITD:
+
+1. we will be develping SFTP for file upload
+2. files will then be sent to landing zone
+3. from lz our scripts will start execution.
+4. we will be maintaing 3 types of tables: 1. master: main table, only updated if correct data is send
+                                           2. incremental: in this table, whatever data we recieve gets appended to it.
+                                           3. staging: recent entry are shown in the tables.										   
+5. First step is preprocess:
+   In ingestion, only we read data from collection and write them into view
+   In cleansing, we clean up the data
+   In sigin, we add various flags to the data set.    
+   1. PARTIONING CONCEPT:
+			we used partion not group as partition return all the items.
+			On that we used p_max, that returns max of partition
+			We created temp variable, temp variable are not included in end results.
+			primary_key_temp was built, which checked clean records
+			primary key logic is difficult, we need to make the record with max cash amt as pk in partition in n complexity and we have used lag for that
+			
+   2. LOOKUP operation:
+			

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>IOG</title>
+
+    <!-- Bootstrap core CSS -->
+    <link  href="{{ url_for('static', filename = 'vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename = 'css/one-page-wonder.css') }}" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg row">
+      
+        <div class="collapse navbar-collapse col-sm-1 col-lg-1 col-md-1" id="navbarResponsive">
+            &nbsp; 
+        </div>
+        <div class="col-sm-2 col-lg-2 col-md-2 col-sm-2 col-lg-2 col-md-2"><a class="navbar-brand" href="#" style="color:#069edb;">SMART SEARCH</a></div>
+        <div class="collapse navbar-collapse col-sm-7 col-lg-7 col-md-7" id="navbarResponsive">
+            &nbsp; 
+        </div>
+        <div class="collapse navbar-collapse col-sm-2 col-lg-2 col-md-2" id="navbarResponsive">
+            <img src="{{ url_for('static', filename = 'images/Opera_sol.png') }}"  class="pull-right">  
+        </div>
+        
+    </nav>
+
+   
+
+    <br>
+    
+    
+      
+   
+
+
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+   
+      
+        
+    </div>
+  </div>
+</div>
+      
+      
+     
+    <div class="breadcrumb">
+    <h4 class="text-center"><a class="navbar-brand" href="{{ url_for('index') }}" style="color:#069edb;">SMART SEARCH</a></h4>
+		<h4 class="text-center" id="filename"></h4>
+	</div>
+     <div class="overlay row">
+        <div class="container col-sm-6 col-lg-6 col-md-6 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+          
+           <h6 class="display-6" id="data_cont"></h6>
+        
+            
+        </div>
+    </div>
+    
+	
+
+	<div>
+    
+    
+    </div>
+	
+	
+	<hr>
+	<form method=get id="download">  
+    <div class="text-center">
+		<input type="submit" class="btn btn-primary" value="Download Your File" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+	</div>
+    </form
+
+    <!-- Footer -->
+    <footer class="py-5">
+      <div class="container" style="color:#069edb;">
+        <p class="m-0 text-center">Copyright &copy; IOG - OPERA SOLUTIONS 2017</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename = 'vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'vendor/popper/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'vendor/jquery/bootbox.min.js') }}"></script>
+
+
+
+  
+  
+  
+  </body>
+
+  <script>
+  
+    
+    window.onload = function(){
+        var fileContent = localStorage.getItem("fileContent");
+        var fileName = localStorage.getItem("fileName");
+
+    document.getElementById('filename').innerHTML = fileName;
+    document.getElementById('data_cont').innerHTML = "<pre>"+fileContent+"</pre>";
+    $('#download').attr('action', 'http://127.0.0.1:5000/downloads/'+fileName);
+
+    };
+    
+  
+  </script>
+  
+</html>
